@@ -1,5 +1,27 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from "next"
 
-const nextConfig: NextConfig = {};
+/**
+ * The old paulsburgersnyc.com was a set of static .html pages. Redirect those
+ * URLs (and the old menu PDF) to the new routes so bookmarks, Google results
+ * and press links keep working.
+ */
+const legacy: [string, string][] = [
+  ["/index.html", "/"],
+  ["/about.html", "/about"],
+  ["/press.html", "/about#press"],
+  ["/celebrities.html", "/about#famous-faces"],
+  ["/popup.html", "/about"],
+  ["/gallery.html", "/gallery"],
+  ["/catering.html", "/catering"],
+  ["/contactus.html", "/visit"],
+  ["/accessibility.html", "/visit"],
+  ["/pdf/:file*", "/menu"],
+]
 
-export default nextConfig;
+const nextConfig: NextConfig = {
+  async redirects() {
+    return legacy.map(([source, destination]) => ({ source, destination, permanent: true }))
+  },
+}
+
+export default nextConfig
