@@ -1,15 +1,17 @@
 import Link from "next/link"
 import Logo from "@/lib/components/logo"
 import { hoursSummary, nav, site } from "@/lib/site"
+import CurrentYear from "@/lib/components/current-year"
+
+const footerLink = "inline-flex min-h-11 items-center hover:text-mustard"
+import { checkerColors } from "@/lib/motion"
 
 export default function Footer() {
-  const year = new Date().getFullYear()
-
   return (
     <footer className="on-dark bg-ink text-cream">
       <div
         className="checker checker-lg"
-        style={{ ["--c1" as string]: "rgb(var(--ink))", ["--c2" as string]: "rgb(var(--cream))" }}
+        style={checkerColors("rgb(var(--ink))", "rgb(var(--cream))")}
         aria-hidden="true"
       />
 
@@ -48,18 +50,22 @@ export default function Footer() {
             <br />
             {site.address.city}, {site.address.region} {site.address.postalCode}
           </address>
-          <a href={site.links.maps} target="_blank" rel="noreferrer" className="mt-3 inline-block font-semibold underline decoration-mustard decoration-2 underline-offset-4 hover:text-mustard">
+          <a
+            href={site.links.maps}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-1 inline-flex min-h-11 items-center font-semibold underline decoration-mustard decoration-2 underline-offset-4 hover:text-mustard"
+          >
             Get directions<span className="sr-only"> (opens in a new tab)</span>
           </a>
-          <p className="mt-6">
-            <a href={site.phone.href} className="font-semibold hover:text-mustard">
+          <div className="mt-4 flex flex-col items-start">
+            <a href={site.phone.href} className={`${footerLink} font-semibold`}>
               {site.phone.display}
             </a>
-            <br />
-            <a href={site.email.href} className="hover:text-mustard">
+            <a href={site.email.href} className={footerLink}>
               {site.email.display}
             </a>
-          </p>
+          </div>
           <h2 className="eyebrow mt-8 text-mustard">Hours</h2>
           <dl className="mt-4 space-y-2">
             {hoursSummary.map((h) => (
@@ -75,19 +81,21 @@ export default function Footer() {
         <div className="grid grid-cols-2 gap-8 md:col-span-3 md:grid-cols-1 lg:col-span-4 lg:grid-cols-2">
           <div>
             <h2 className="eyebrow text-mustard">Explore</h2>
-            <ul className="mt-4 space-y-2">
+            <ul className="mt-2">
               <li>
-                <Link href="/" className="hover:text-mustard">Home</Link>
+                <Link href="/" className={footerLink}>
+                  Home
+                </Link>
               </li>
               {nav.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="hover:text-mustard">
+                  <Link href={item.href} className={footerLink}>
                     {item.label}
                   </Link>
                 </li>
               ))}
               <li>
-                <a href={site.links.giftCards} target="_blank" rel="noreferrer" className="hover:text-mustard">
+                <a href={site.links.giftCards} target="_blank" rel="noreferrer" className={footerLink}>
                   Gift cards<span className="sr-only"> (opens in a new tab)</span>
                 </a>
               </li>
@@ -95,11 +103,12 @@ export default function Footer() {
           </div>
           <div>
             <h2 className="eyebrow text-mustard">Follow</h2>
-            <ul className="mt-4 space-y-2">
+            <ul className="mt-2">
               {site.social.map((s) => (
                 <li key={s.href}>
-                  <a href={s.href} target="_blank" rel="noreferrer" className="hover:text-mustard">
-                    {s.label}<span className="sr-only"> (opens in a new tab)</span>
+                  <a href={s.href} target="_blank" rel="noreferrer" className={footerLink}>
+                    {s.label}
+                    <span className="sr-only"> (opens in a new tab)</span>
                   </a>
                 </li>
               ))}
@@ -111,13 +120,13 @@ export default function Footer() {
       <div className="border-t border-cream/15">
         <div className="container-site flex flex-col gap-3 py-6 text-[0.95rem] text-cream/70 sm:flex-row sm:items-center sm:justify-between">
           <p>
-            &copy; {year} {site.name}. {site.address.street}, New York.
+            &copy; <CurrentYear /> {site.name}. {site.address.street}, New York.
           </p>
           <a
             href="https://novusnyc.org"
             target="_blank"
             rel="noreferrer"
-            className="font-semibold text-mustard underline-offset-4 hover:underline"
+            className="inline-flex min-h-11 items-center self-start font-semibold text-mustard underline-offset-4 hover:underline"
           >
             Made by Novus
           </a>

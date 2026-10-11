@@ -23,7 +23,11 @@
   --bun: 232 220 199; /* #E8DCC7  borders, quiet fills */
   --muted: 94 84 74; /* #5E544A  secondary text (6.4:1 on cream) */
 
+  --go: 46 159 91; /* #2E9F5B  "open now" dot only */
+  --sign: 29 107 69; /* #1D6B45  NYC street-sign green, Visit page only */
+
   --nav-h: 4.25rem;
+  --menubar-h: 3.75rem;
 }
 
 /* ------------------------------------------------------------------ */
@@ -32,7 +36,9 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
-    scroll-padding-top: calc(var(--nav-h) + 4.5rem);
+    /* One offset for every in-page anchor: the sticky nav plus breathing room.
+       The menu page adds its category bar via scroll-margin on each section. */
+    scroll-padding-top: calc(var(--nav-h) + 1rem);
   }
 
   body {
@@ -79,7 +85,7 @@
 
   /* Buttons ---------------------------------------------------------- */
   .btn {
-    @apply inline-flex min-h-[3rem] items-center justify-center gap-2 border-2 px-5 font-cond text-[1.1rem] font-bold uppercase tracking-[0.08em] transition-[background-color,color,border-color,transform] duration-200 ease-out;
+    @apply inline-flex min-h-[3rem] items-center justify-center gap-2 whitespace-nowrap border-2 px-5 text-center font-cond text-[1.1rem] font-bold uppercase tracking-[0.08em] transition-[background-color,color,border-color,transform] duration-200 ease-out;
   }
   .btn:active {
     transform: translateY(1px);
@@ -104,19 +110,28 @@
   .link-underline {
     @apply font-semibold underline decoration-ketchup decoration-2 underline-offset-4 transition-colors hover:text-ketchup-deep;
   }
+  /* Same link when it sits on its own line: give it a full-size tap target. */
+  .link-cta {
+    @apply link-underline inline-flex min-h-11 items-center;
+  }
+
+  /* Hard offset shadow used by framed prints and panels. */
+  .shadow-print {
+    box-shadow: 6px 6px 0 rgb(var(--ink));
+  }
 
   /* Checkerboard band: the diner floor, used as a structural divider. */
   .checker {
     --c1: rgb(var(--ink));
     --c2: rgb(var(--cream));
-    --size: 18px;
-    height: var(--size);
+    --size: 14px;
+    height: calc(var(--size) * 2);
     background-color: var(--c2);
     background-image: conic-gradient(var(--c1) 25%, transparent 0 50%, var(--c1) 0 75%, transparent 0);
     background-size: calc(var(--size) * 2) calc(var(--size) * 2);
   }
   .checker-lg {
-    --size: 26px;
+    --size: 18px;
   }
 
   /* Felt letterboard: grooved black felt with white plastic letters. */
@@ -157,7 +172,9 @@
   /* Price sticker */
   .sticker {
     @apply grid place-items-center rounded-full bg-mustard text-center text-ink;
-    box-shadow: 0 0 0 4px rgb(var(--cream)), 0 0 0 6px rgb(var(--ink));
+    box-shadow:
+      0 0 0 4px rgb(var(--cream)),
+      0 0 0 6px rgb(var(--ink));
   }
 }
 

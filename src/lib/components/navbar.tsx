@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { nav, site } from "@/lib/site"
 import Logo from "@/lib/components/logo"
+import { checkerColors } from "@/lib/motion"
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -38,8 +39,7 @@ export default function Navbar() {
     const panel = panelRef.current
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = "hidden"
-    const focusables = () =>
-      Array.from(panel?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])") ?? [])
+    const focusables = () => Array.from(panel?.querySelectorAll<HTMLElement>("a[href], button:not([disabled])") ?? [])
     focusables()[0]?.focus()
 
     const onKey = (e: KeyboardEvent) => {
@@ -74,7 +74,7 @@ export default function Navbar() {
     <header
       className={`sticky top-0 z-50 h-nav border-b-2 transition-[background-color,border-color,box-shadow] duration-300 ${
         scrolled || open
-          ? "border-ink bg-paper/95 shadow-[0_6px_0_-4px_rgb(var(--ink)/0.08)] backdrop-blur-sm"
+          ? "border-ink bg-paper shadow-[0_6px_0_-4px_rgb(var(--ink)/0.08)]"
           : "border-transparent bg-cream"
       }`}
     >
@@ -123,18 +123,22 @@ export default function Navbar() {
             onClick={() => (open ? close() : setOpen(true))}
           >
             <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
-            <svg aria-hidden="true" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="2.5">
-              {open ? (
-                <path d="M4 4l14 14M18 4L4 18" />
-              ) : (
-                <path d="M2 5h18M2 11h18M2 17h18" />
-              )}
+            <svg
+              aria-hidden="true"
+              width="22"
+              height="22"
+              viewBox="0 0 22 22"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+            >
+              {open ? <path d="M4 4l14 14M18 4L4 18" /> : <path d="M2 5h18M2 11h18M2 17h18" />}
             </svg>
           </button>
         </div>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile menu. Must stay outside any ancestor with transform or backdrop-filter, which would trap this fixed panel. */}
       <div
         id="mobile-menu"
         ref={panelRef}
@@ -144,13 +148,14 @@ export default function Navbar() {
         hidden={!open}
         className="fixed inset-x-0 bottom-0 top-nav z-40 overflow-y-auto bg-ink text-cream lg:hidden"
       >
-        <div className="checker" style={{ ["--c2" as string]: "rgb(var(--ink))", ["--c1" as string]: "rgb(var(--cream))" }} />
+        <div className="checker" style={checkerColors("rgb(var(--cream))", "rgb(var(--ink))")} />
         <div className="container-site flex min-h-[calc(100%-18px)] flex-col justify-between gap-10 py-8">
           <ul className="space-y-1">
             <li>
               <Link
                 href="/"
                 aria-current={pathname === "/" ? "page" : undefined}
+                onClick={() => setOpen(false)}
                 className="block py-2 font-display text-[2rem] leading-tight hover:text-mustard aria-[current=page]:text-mustard"
               >
                 Home
@@ -161,6 +166,7 @@ export default function Navbar() {
                 <Link
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
+                  onClick={() => setOpen(false)}
                   className="block py-2 font-display text-[2rem] leading-tight hover:text-mustard aria-[current=page]:text-mustard"
                 >
                   {item.label}
@@ -175,11 +181,7 @@ export default function Navbar() {
             <p className="text-cream/80">
               {site.address.street} {site.address.crossStreet}
             </p>
-            <button
-              type="button"
-              onClick={() => close()}
-              className="btn btn-outline-light w-full"
-            >
+            <button type="button" onClick={() => close()} className="btn btn-outline-light w-full">
               Close menu
             </button>
           </div>

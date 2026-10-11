@@ -4,7 +4,12 @@ import OpenStatus from "@/lib/components/open-status"
 import Print from "@/lib/components/print"
 import { findItem, formatPrice, menu } from "@/lib/menu"
 import { photos } from "@/lib/photos"
-import { press, site } from "@/lib/site"
+import { hoursSummary, press, site } from "@/lib/site"
+import { riseDelay, revealDelay } from "@/lib/motion"
+import type { Metadata } from "next"
+import { pageMetadata } from "@/lib/metadata"
+
+export const metadata: Metadata = pageMetadata({ description: site.description, path: "/" })
 
 const lineup = [
   { name: "Eastsider Burger", note: "The house specialty. Bacon, ham, mushrooms, tomatoes, onions, cheese." },
@@ -12,7 +17,7 @@ const lineup = [
   { name: "Second Avenue Burger", note: "Fried onions, ham and tomatoes on a cheeseburger." },
   { name: "Texas Burger", note: "A fried egg on top. Break the yolk." },
   { name: "El Paso Burger", note: "Cheddar and fresh jalapeños." },
-  { name: "Paul's Smash Burger", note: "Thin patty, Russian dressing, all the classics." },
+  { name: "Soul Burger", note: "A bacon cheeseburger with ham and fried onions." },
 ].map((l) => ({ ...l, item: findItem(l.name) }))
 
 const fountain = menu.find((s) => s.id === "fountain")!
@@ -35,34 +40,39 @@ export default function HomePage() {
               <span>{site.address.crossStreet}</span>
             </p>
             <h1 className="mt-5 font-display text-d-xl text-ink">
-              <span className="animate-rise block" style={{ ["--rise-delay" as string]: "60ms" }}>
+              <span className="animate-rise block" style={riseDelay(60)}>
                 Half-pound
-              </span>
-              <span className="animate-rise block" style={{ ["--rise-delay" as string]: "120ms" }}>
+              </span>{" "}
+              <span className="animate-rise block" style={riseDelay(120)}>
                 burgers on
-              </span>
-              <span className="animate-rise block text-ketchup" style={{ ["--rise-delay" as string]: "180ms" }}>
+              </span>{" "}
+              <span className="animate-rise block text-ketchup" style={riseDelay(180)}>
                 Second Ave
-              </span>
+              </span>{" "}
               <span
                 className="animate-rise mt-3 block font-inline text-[0.42em] leading-none text-ink/90"
-                style={{ ["--rise-delay" as string]: "240ms" }}
+                style={riseDelay(240)}
               >
                 since {site.founded}
               </span>
             </h1>
             <p
               className="animate-rise mt-7 max-w-prose text-[1.15rem] leading-relaxed text-ink/85 md:text-[1.2rem]"
-              style={{ ["--rise-delay" as string]: "320ms" }}
+              style={riseDelay(320)}
             >
               Paul&rsquo;s Da Burger Joint is the family-run counter at St. Mark&rsquo;s Place. Eight-ounce burgers
               cooked to order, steak fries, egg creams and frosteds, served late every night of the week.
             </p>
             <div
-              className="animate-rise mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
-              style={{ ["--rise-delay" as string]: "380ms" }}
+              className="animate-rise mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
+              style={riseDelay(380)}
             >
-              <a href={site.links.order} target="_blank" rel="noreferrer" className="btn btn-primary text-[1.2rem] sm:px-7">
+              <a
+                href={site.links.order}
+                target="_blank"
+                rel="noreferrer"
+                className="btn btn-primary text-[1.2rem] sm:px-7"
+              >
                 Order pickup or delivery<span className="sr-only"> (opens in a new tab)</span>
               </a>
               <Link href="/menu" className="btn btn-outline">
@@ -73,8 +83,11 @@ export default function HomePage() {
           </div>
 
           {/* Photo collage */}
-          <div className="relative mx-auto w-full max-w-[34rem] md:col-span-5 md:max-w-none" aria-label="Photos from Paul's">
-            <div className="animate-rise relative z-10 ml-auto w-[88%]" style={{ ["--rise-delay" as string]: "150ms" }}>
+          <div
+            className="relative mx-auto w-full max-w-[34rem] md:col-span-5 md:max-w-none"
+            aria-label="Photos from Paul's"
+          >
+            <div className="animate-rise relative z-10 ml-auto w-[88%]" style={riseDelay(150)}>
               <Print
                 photo={photos.baconCheeseburgerChecker}
                 sizes="(min-width: 1024px) 34vw, (min-width: 768px) 38vw, 88vw"
@@ -83,18 +96,15 @@ export default function HomePage() {
                 tilt={2}
               />
             </div>
-            <div
-              className="animate-rise relative z-20 -mt-[18%] w-[52%]"
-              style={{ ["--rise-delay" as string]: "300ms" }}
-            >
+            <div className="animate-rise relative z-20 -mt-[18%] w-[52%]" style={riseDelay(300)}>
               <Print photo={photos.signEst1989} sizes="(min-width: 768px) 20vw, 48vw" reveal={false} tilt={-3} />
             </div>
-            <div
-              className="sticker animate-stamp absolute right-[2%] top-[54%] z-30 h-28 w-28 -rotate-[8deg] md:h-32 md:w-32"
-            >
+            <div className="sticker animate-stamp absolute right-[2%] top-[54%] z-30 h-28 w-28 -rotate-[8deg] md:h-32 md:w-32">
               <p className="font-cond font-bold uppercase leading-none">
                 <span className="block text-[0.95rem] tracking-[0.1em]">8 oz from</span>
-                <span className="block font-display text-[1.9rem] leading-none md:text-[2.2rem]">${formatPrice(beef.price)}</span>
+                <span className="block font-display text-[1.9rem] leading-none md:text-[2.2rem]">
+                  ${formatPrice(beef.price)}
+                </span>
               </p>
             </div>
           </div>
@@ -110,24 +120,32 @@ export default function HomePage() {
           <div data-reveal="">
             <dt className="eyebrow text-mustard">Open late, every day</dt>
             <dd className="mt-2 text-cream/90">
-              11:00 AM to 11:30 PM, Sunday to Thursday.
+              {hoursSummary[0].time}, {hoursSummary[0].days}.
               <br />
-              Until midnight on Friday and Saturday.
+              {hoursSummary[1].time}, {hoursSummary[1].days}.
             </dd>
           </div>
-          <div data-reveal="" style={{ ["--reveal-delay" as string]: "80ms" }}>
+          <div data-reveal="" style={revealDelay(80)}>
             <dt className="eyebrow text-mustard">On the corner</dt>
             <dd className="mt-2 text-cream/90">
               {site.address.street} {site.address.crossStreet}.{" "}
-              <a href={site.links.maps} target="_blank" rel="noreferrer" className="font-semibold text-cream underline decoration-mustard decoration-2 underline-offset-4 hover:text-mustard">
+              <a
+                href={site.links.maps}
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-cream underline decoration-mustard decoration-2 underline-offset-4 hover:text-mustard"
+              >
                 Get directions<span className="sr-only"> (opens in a new tab)</span>
               </a>
             </dd>
           </div>
-          <div data-reveal="" style={{ ["--reveal-delay" as string]: "160ms" }}>
+          <div data-reveal="" style={revealDelay(160)}>
             <dt className="eyebrow text-mustard">Call the counter</dt>
             <dd className="mt-2">
-              <a href={site.phone.href} className="font-display text-[1.5rem] leading-none text-cream hover:text-mustard">
+              <a
+                href={site.phone.href}
+                className="font-display text-[1.5rem] leading-none text-cream hover:text-mustard"
+              >
                 {site.phone.display}
               </a>
             </dd>
@@ -140,7 +158,7 @@ export default function HomePage() {
       {/* ------------------------------------------------------------ */}
       <section className="py-section" aria-labelledby="lineup-heading">
         <div className="container-site grid gap-12 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-5">
+          <div className="self-start lg:sticky lg:top-[calc(var(--nav-h)+2rem)] lg:col-span-5">
             <p className="eyebrow text-ketchup-deep" data-reveal="">
               {halfPoundCount} half-pound burgers
             </p>
@@ -148,12 +166,23 @@ export default function HomePage() {
               Named for the block
             </h2>
             <p className="mt-5 max-w-prose text-ink/85" data-reveal="">
-              The Second Avenue. The Saint Mark&rsquo;s. The Eastsider. Every burger starts as a full half pound of beef
-              (or turkey, if you ask), and the names tell you exactly where you are.
+              The Second Avenue, the Saint Mark&rsquo;s and the Eastsider are named for the corner they&rsquo;re cooked
+              on. Every one starts as a full half pound of beef, or turkey if you ask.
             </p>
             <div className="mt-10 grid grid-cols-2 gap-4 sm:gap-5">
-              <Print photo={photos.texasBurger} sizes="(min-width: 1024px) 19vw, 45vw" caption="The Texas" tilt={-1.5} />
-              <Print photo={photos.mushroomBaconBurger} sizes="(min-width: 1024px) 19vw, 45vw" caption="Mushrooms, bacon" className="mt-8" tilt={1.5} />
+              <Print
+                photo={photos.texasBurger}
+                sizes="(min-width: 1024px) 19vw, 45vw"
+                caption="The Texas"
+                tilt={-1.5}
+              />
+              <Print
+                photo={photos.mushroomBaconBurger}
+                sizes="(min-width: 1024px) 19vw, 45vw"
+                caption="Mushrooms, bacon"
+                className="mt-8"
+                tilt={1.5}
+              />
             </div>
           </div>
 
@@ -171,13 +200,15 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 text-center text-[0.95rem] text-cream/65">Online prices. Deluxe, cheese and extras cost more.</p>
+              <p className="mt-6 text-center text-[0.95rem] text-cream/65">
+                Online prices. Deluxe, cheese and extras cost more.
+              </p>
             </div>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
               <Link href="/menu" className="btn btn-ink">
                 See all {halfPoundCount} burgers
               </Link>
-              <Link href="/menu#eggs" className="link-underline">
+              <Link href="/menu#eggs" className="link-cta">
                 Or the omelettes, platters and heroes
               </Link>
             </div>
@@ -190,10 +221,13 @@ export default function HomePage() {
       {/* ------------------------------------------------------------ */}
       <section className="border-y-2 border-ink bg-paper" aria-labelledby="story-heading">
         <div className="grid lg:grid-cols-2">
-          <div className="relative min-h-[18rem] border-b-2 border-ink sm:min-h-[24rem] lg:min-h-0 lg:border-b-0 lg:border-r-2" data-reveal="mask">
+          <div
+            className="relative min-h-[18rem] border-b-2 border-ink sm:min-h-[24rem] lg:min-h-0 lg:border-b-0 lg:border-r-2"
+            data-reveal="mask"
+          >
             <Image
-              src={photos.diningRoom.src}
-              alt={photos.diningRoom.alt}
+              src={photos.diningRoomTables.src}
+              alt={photos.diningRoomTables.alt}
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover"
@@ -208,9 +242,9 @@ export default function HomePage() {
             </h2>
             <div className="mt-6 max-w-prose space-y-4 text-ink/85" data-reveal="">
               <p>
-                Paul opened this place as Paul&rsquo;s Palace in {site.founded}. Today it&rsquo;s still a family business,
-                run by his cousin Matt, with the same checkered tablecloths, the same counter and the same cooks
-                regulars greet by name.
+                Paul opened this place as Paul&rsquo;s Palace in {site.founded}. Today it&rsquo;s still a family
+                business, run by his cousin Matt, with the same checkered tablecloths, the same counter and the same
+                cooks regulars greet by name.
               </p>
               <p>
                 It&rsquo;s a fifties-style counter-service joint: big portions, fair prices, and a dining room covered
@@ -221,7 +255,7 @@ export default function HomePage() {
               <Link href="/about" className="btn btn-outline">
                 Read our story
               </Link>
-              <Link href="/gallery" className="link-underline">
+              <Link href="/gallery" className="link-cta">
                 Look around the joint
               </Link>
             </div>
@@ -247,7 +281,10 @@ export default function HomePage() {
             </p>
             <ul className="mt-8 max-w-md space-y-3 border-t-2 border-ink pt-5" data-reveal="">
               {fountain.items.map((item) => (
-                <li key={item.name} className="leader font-cond text-[1.3rem] font-semibold uppercase tracking-[0.06em]">
+                <li
+                  key={item.name}
+                  className="leader font-cond text-[1.3rem] font-semibold uppercase tracking-[0.06em]"
+                >
                   <span>{item.name}</span>
                   <span className="leader-price tabular-nums">{formatPrice(item.price)}</span>
                 </li>
@@ -281,12 +318,12 @@ export default function HomePage() {
                 &ldquo;Best hole-in-the-wall burger joint&rdquo; in New York
               </h2>
               <p className="mt-4 text-ink/80" data-reveal="">
-                That was Tasting Table in 2026. Eater, Serious Eats, New York Magazine and Time Out have all pulled
-                up a stool over the years too.
+                That was Tasting Table in 2026. Eater, Serious Eats, New York Magazine and Time Out have all pulled up a
+                stool over the years too.
               </p>
             </div>
             <div className="lg:col-span-5 lg:text-right" data-reveal="">
-              <Link href="/about#press" className="link-underline">
+              <Link href="/about#press" className="link-cta">
                 Read the reviews
               </Link>
             </div>
@@ -328,8 +365,8 @@ export default function HomePage() {
               <p className="eyebrow">Gift cards</p>
               <h2 className="mt-3 font-display text-d-md">Give someone a half pound</h2>
               <p className="mt-4 max-w-md text-ink/85">
-                Send a gift certificate by email, or have one mailed. Birthdays, thank-yous, the friend who moved
-                away from the neighborhood.
+                Send a gift certificate by email, or have one mailed. Birthdays, thank-yous, the friend who moved away
+                from the neighborhood.
               </p>
             </div>
             <div data-reveal="">
@@ -354,9 +391,10 @@ export default function HomePage() {
               Hungry now?
             </h2>
             <p className="mt-4 max-w-prose text-ink/85" data-reveal="">
-              Order online for pickup or delivery, or walk in and grab a seat. We&rsquo;re a few blocks from Astor Place.
+              Order online for pickup or delivery, or walk in and grab a seat. We&rsquo;re a few blocks from Astor
+              Place.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row" data-reveal="">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap" data-reveal="">
               <a href={site.links.order} target="_blank" rel="noreferrer" className="btn btn-primary">
                 Order online<span className="sr-only"> (opens in a new tab)</span>
               </a>

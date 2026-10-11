@@ -1,20 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { hours } from "@/lib/site"
+import { DAY_NAMES, formatTime, hours } from "@/lib/site"
 
 type Status = { open: boolean; label: string }
-
-const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-
-function formatTime(minutes: number) {
-  if (minutes >= 24 * 60) return "midnight"
-  const h = Math.floor(minutes / 60)
-  const m = minutes % 60
-  const suffix = h >= 12 ? "PM" : "AM"
-  const h12 = h % 12 === 0 ? 12 : h % 12
-  return `${h12}:${m.toString().padStart(2, "0")} ${suffix}`
-}
 
 /** Current day and minute in New York, regardless of the visitor's time zone. */
 function nowInNewYork() {
@@ -50,13 +39,7 @@ export function computeStatus(): Status {
  * Live open or closed badge. Renders a neutral placeholder on the server and
  * fills in after mount, so there is no hydration mismatch.
  */
-export default function OpenStatus({
-  tone = "light",
-  className = "",
-}: {
-  tone?: "light" | "dark"
-  className?: string
-}) {
+export default function OpenStatus({ className = "" }: { className?: string }) {
   const [status, setStatus] = useState<Status | null>(null)
 
   useEffect(() => {
@@ -66,13 +49,15 @@ export default function OpenStatus({
     return () => window.clearInterval(id)
   }, [])
 
-  const dot = status?.open ? "bg-[#2E9F5B]" : status ? "bg-ketchup" : "bg-muted"
-  const text = tone === "dark" ? "text-cream" : "text-ink"
+  const dot = status?.open ? "bg-go" : status ? "bg-ketchup" : "bg-muted"
 
   return (
-    <p className={`flex min-h-[1.75rem] items-center gap-2.5 font-cond text-[1.1rem] font-semibold ${text} ${className}`} aria-live="polite">
+    <p
+      className={`flex min-h-[1.75rem] items-center gap-2.5 font-cond text-[1.1rem] font-semibold text-ink ${className}`}
+      aria-live="polite"
+    >
       <span className={`relative inline-flex h-2.5 w-2.5 shrink-0 rounded-full ${dot}`} aria-hidden="true" />
-      <span>{status ? status.label : "Open daily from 11:00 AM"}</span>
+      <span>{status ? status.label : `Open daily from ${formatTime(hours[0].open)}`}</span>
     </p>
   )
 }

@@ -15,11 +15,12 @@ It replaces the old paulsburgersnyc.com, where the menu was a PDF and ordering, 
 | `/catering` | How catering works, ezCater details and a quote request form |
 | `/visit` | Hours (today highlighted), map, directions and contact |
 
-Old `.html` URLs (`/about.html`, `/press.html`, `/contactus.html`, the menu PDF and so on) permanently redirect to the new routes. See `next.config.ts`.
+Old `.html` URLs (`/about.html`, `/press.html`, `/contactus.html`, the menu PDF and so on) permanently redirect to the new routes. See `next.config.ts`. Anything else gets a branded 404 (`src/app/not-found.tsx`). `robots.txt` and `sitemap.xml` are generated from `src/app/robots.ts` and `src/app/sitemap.ts`.
 
 ## Where to edit things
 
-- **Business details** (address, phone, email, hours, ordering, catering, gift card and social links, press): `src/lib/site.ts`
+- **Business details** (address, phone, email, hours, ordering, catering, gift card and social links, press): `src/lib/site.ts`. Hours text, the open-now badge, the hours table and the search-engine data are all generated from the one `hours` array.
+- **Page titles, descriptions and share images**: `src/lib/metadata.ts` (`pageMetadata`), used by every route
 - **Menu items and prices**: `src/lib/menu.ts`. Prices were transcribed from the live online ordering menu on October 11, 2026.
 - **Photos and alt text**: `src/lib/photos.ts`, files in `public/photos`
 - **Famous faces**: `src/lib/famous-faces.ts`, files in `public/photos/faces`

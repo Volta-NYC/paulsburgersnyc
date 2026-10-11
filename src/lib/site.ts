@@ -30,6 +30,7 @@ export const site = {
   phone: {
     display: "(212) 529-3033",
     href: "tel:+12125293033",
+    e164: "+1-212-529-3033",
   },
   email: {
     display: "info@paulsburgersnyc.com",
@@ -41,14 +42,13 @@ export const site = {
     catering: "https://www.ezcater.com/catering/pvt/pauls-da-burger-joint-1",
     giftCards: "https://onelink.quickgifts.com/merchant/pauls-da-burger-joint/",
     maps: "https://www.google.com/maps/search/?api=1&query=Paul%27s+Da+Burger+Joint+131+2nd+Ave+New+York+NY+10003",
-    mapEmbed:
-      "https://www.google.com/maps?q=Paul%27s+Da+Burger+Joint,+131+2nd+Ave,+New+York,+NY+10003&output=embed",
+    mapEmbed: "https://www.google.com/maps?q=Paul%27s+Da+Burger+Joint,+131+2nd+Ave,+New+York,+NY+10003&output=embed",
   },
 
   social: [
     { label: "Instagram", href: "https://www.instagram.com/paulsdaburgerjoint/" },
     { label: "Facebook", href: "https://www.facebook.com/PaulsDaBurgerJoint" },
-    { label: "X (Twitter)", href: "https://twitter.com/PaulsBurgerNYC" },
+    { label: "X (Twitter)", href: "https://x.com/PaulsBurgerNYC" },
   ],
 } as const
 
@@ -68,11 +68,39 @@ export const hours: DayHours[] = [
   { day: 6, open: 11 * 60, close: 24 * 60 },
 ]
 
-/** Human-readable grouping used in the footer and Visit page. */
+export const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] as const
+
+/** 690 -> "11:30 AM"; 24 * 60 -> "midnight". */
+export function formatTime(minutes: number) {
+  if (minutes >= 24 * 60) return "midnight"
+  const h = Math.floor(minutes / 60)
+  const m = minutes % 60
+  const h12 = h % 12 === 0 ? 12 : h % 12
+  return `${h12}:${m.toString().padStart(2, "0")} ${h >= 12 ? "PM" : "AM"}`
+}
+
+const timeRange = (d: DayHours) => `${formatTime(d.open)} to ${formatTime(d.close)}`
+
+/** Human-readable grouping used on the homepage, footer, Visit page and metadata. */
 export const hoursSummary = [
-  { days: "Sunday to Thursday", time: "11:00 AM to 11:30 PM" },
-  { days: "Friday and Saturday", time: "11:00 AM to midnight" },
+  { days: "Sunday to Thursday", time: timeRange(hours[0]) },
+  { days: "Friday and Saturday", time: timeRange(hours[5]) },
 ] as const
+
+/** schema.org openingHoursSpecification, grouped by identical hours. */
+export function openingHoursSpecification() {
+  const hhmm = (m: number) =>
+    m >= 24 * 60 ? "23:59" : `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`
+  const groups = new Map<string, string[]>()
+  for (const d of hours) {
+    const key = `${d.open}-${d.close}`
+    groups.set(key, [...(groups.get(key) ?? []), DAY_NAMES[d.day]])
+  }
+  return Array.from(groups.entries()).map(([key, days]) => {
+    const [open, close] = key.split("-").map(Number)
+    return { "@type": "OpeningHoursSpecification", dayOfWeek: days, opens: hhmm(open), closes: hhmm(close) }
+  })
+}
 
 export const nav = [
   { href: "/menu", label: "Menu" },
@@ -112,19 +140,19 @@ export const press = [
     outlet: "Time Out New York",
     note: "Restaurant listing and review",
     year: null,
-    href: "http://www.timeout.com/newyork/restaurants/pauls",
+    href: "https://www.timeout.com/newyork/restaurants/pauls",
   },
   {
     outlet: "Crain's New York",
-    note: "Small business on the block after the 2015 East Village explosion",
+    note: "Matt Wardrop of Paul's, in a story on the block after the 2015 East Village explosion",
     year: 2015,
-    href: "http://www.crainsnewyork.com/article/20150405/SMALLBIZ/150409943/when-a-disaster-like-the-east-village-explosion-visits-your-block",
+    href: "https://www.crainsnewyork.com/article/20150405/SMALLBIZ/150409943/when-a-disaster-like-the-east-village-explosion-visits-your-block/",
   },
   {
     outlet: "Gothamist",
-    note: "A neighborhood small business crawl after the explosion",
+    note: "A small business crawl stopping at Paul's, a few storefronts up from the explosion site",
     year: 2015,
-    href: "http://gothamist.com/2015/04/08/small_biz_crawl_for_ev_explosion_sh.php",
+    href: "https://gothamist.com/food/small-biz-crawl-will-help-establishments-reeling-from-east-village-explosion",
   },
   {
     outlet: "The Burger Review",

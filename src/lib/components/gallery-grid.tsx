@@ -2,11 +2,11 @@
 
 import Image from "next/image"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import type { GalleryCategory, Photo } from "@/lib/photos"
+import { galleryCategories, type GalleryCategory, type Photo } from "@/lib/photos"
 
 type Item = { photo: Photo; category: GalleryCategory }
 
-const FILTERS: ("All" | GalleryCategory)[] = ["All", "Burgers", "Sides & drinks", "The joint"]
+const FILTERS = ["All", ...galleryCategories] as const
 
 /**
  * Filterable photo wall with an accessible lightbox built on <dialog>,
@@ -95,9 +95,12 @@ export default function GalleryGrid({ items }: { items: Item[] }) {
             <button
               type="button"
               onClick={(e) => open(i, e.currentTarget)}
-              className="group block w-full bg-paper p-1.5 text-left ring-2 ring-ink transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-[5px_5px_0_rgb(var(--ink))] sm:p-2"
+              className="group block w-full bg-paper p-1.5 text-left ring-2 ring-ink transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-print sm:p-2"
             >
-              <span className="relative block overflow-hidden bg-bun" style={{ aspectRatio: `${item.photo.width} / ${item.photo.height}` }}>
+              <span
+                className="relative block overflow-hidden bg-bun"
+                style={{ aspectRatio: `${item.photo.width} / ${item.photo.height}` }}
+              >
                 <Image
                   src={item.photo.src}
                   alt={item.photo.alt}
@@ -115,7 +118,7 @@ export default function GalleryGrid({ items }: { items: Item[] }) {
       <dialog
         ref={dialogRef}
         aria-label="Photo viewer"
-        className="m-auto h-full max-h-none w-full max-w-none bg-transparent p-0 text-cream backdrop:bg-ink/90"
+        className="on-dark m-auto h-full max-h-none w-full max-w-none bg-transparent p-0 text-cream backdrop:bg-ink/90"
         onClick={(e) => {
           if (e.target === e.currentTarget) close()
         }}
@@ -137,12 +140,26 @@ export default function GalleryGrid({ items }: { items: Item[] }) {
               }}
             >
               <figure className="w-full">
-                <div className="relative mx-auto max-h-[72vh] bg-paper p-2" style={{ aspectRatio: `${current.photo.width} / ${current.photo.height}`, maxWidth: `min(100%, calc(72vh * ${current.photo.width / current.photo.height}))` }}>
+                <div
+                  className="relative mx-auto max-h-[72vh] bg-paper p-2"
+                  style={{
+                    aspectRatio: `${current.photo.width} / ${current.photo.height}`,
+                    maxWidth: `min(100%, calc(72vh * ${current.photo.width / current.photo.height}))`,
+                  }}
+                >
                   <div className="relative h-full w-full">
-                    <Image src={current.photo.src} alt={current.photo.alt} fill sizes="(min-width: 1024px) 64rem, 100vw" className="object-contain" />
+                    <Image
+                      src={current.photo.src}
+                      alt={current.photo.alt}
+                      fill
+                      sizes="(min-width: 1024px) 64rem, 100vw"
+                      className="object-contain"
+                    />
                   </div>
                 </div>
-                <figcaption className="mx-auto mt-4 max-w-2xl text-center text-cream/85">{current.photo.alt}</figcaption>
+                <figcaption className="mx-auto mt-4 max-w-2xl text-center text-cream/85">
+                  {current.photo.alt}
+                </figcaption>
               </figure>
             </div>
             <div className="container-site flex justify-between gap-4 py-5">

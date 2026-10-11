@@ -28,6 +28,9 @@ const config: Config = {
           deep: "rgb(var(--mustard-deep) / <alpha-value>)",
         },
         mint: "rgb(var(--mint) / <alpha-value>)",
+        // One-off illustrative colors
+        go: "rgb(var(--go) / <alpha-value>)",
+        sign: "rgb(var(--sign) / <alpha-value>)",
         // Neutrals
         cream: "rgb(var(--cream) / <alpha-value>)",
         paper: "rgb(var(--paper) / <alpha-value>)",

@@ -32,8 +32,7 @@ export const menu: MenuSection[] = [
     id: "half-pound",
     title: "Half-Pound Specialties",
     short: "Burgers",
-    intro:
-      "Our famous 8 oz burgers, a full half pound each, cooked to order.",
+    intro: "Our famous 8 oz burgers, a full half pound each, cooked to order.",
     items: [
       { name: "Beef Burger", description: "Our famous 8 oz burger.", price: 9.6, from: true },
       { name: "Turkey Burger", description: "Our famous 8 oz burger, made with turkey.", price: 9.6, from: true },
@@ -49,10 +48,20 @@ export const menu: MenuSection[] = [
       { name: "Chili Burger", description: "Smothered with chili con carne.", price: 12.85, from: true },
       { name: "Pizza Burger", description: "Mozzarella and pizza sauce.", price: 13.1, from: true },
       { name: "Mushroom Burger", description: "Smothered with mushrooms.", price: 13.1, from: true },
-      { name: "Second Avenue Burger", description: "A cheeseburger with fried onions, ham and tomatoes.", price: 13.85, from: true },
+      {
+        name: "Second Avenue Burger",
+        description: "A cheeseburger with fried onions, ham and tomatoes.",
+        price: 13.85,
+        from: true,
+      },
       { name: "Cali Mex Burger", description: "Avocado and jalapeños.", price: 14.1, from: true },
       { name: "Mexican Burger", description: "Pepper Jack cheese and avocado.", price: 14.1, from: true },
-      { name: "Saint Mark's Burger", description: "A cheeseburger topped with mushrooms and fried onions.", price: 15.35, from: true },
+      {
+        name: "Saint Mark's Burger",
+        description: "A cheeseburger topped with mushrooms and fried onions.",
+        price: 15.35,
+        from: true,
+      },
       { name: "Soul Burger", description: "A bacon cheeseburger with ham and fried onions.", price: 16.1, from: true },
       {
         name: "Eastsider Burger",
@@ -94,10 +103,20 @@ export const menu: MenuSection[] = [
     title: "More Than Burgers",
     short: "Heroes",
     items: [
-      { name: "Philly Cheesesteak", description: "Sliced steak, mozzarella and onions on Italian bread.", price: 11, from: true },
+      {
+        name: "Philly Cheesesteak",
+        description: "Sliced steak, mozzarella and onions on Italian bread.",
+        price: 11,
+        from: true,
+      },
       { name: "Mexican Philly Steak", description: "With jalapeños and fried tomatoes.", price: 13 },
       { name: "Italian Sausage Hero", description: "Served with peppers and onions.", price: 11, from: true },
-      { name: "Chicken Filet Sandwich", description: "A 6 oz grilled chicken filet with lettuce and tomato.", price: 11.25, from: true },
+      {
+        name: "Chicken Filet Sandwich",
+        description: "A 6 oz grilled chicken filet with lettuce and tomato.",
+        price: 11.25,
+        from: true,
+      },
       { name: "Fish Filet Sandwich", description: "Lettuce, tomato and tartar sauce.", price: 10.5, from: true },
       { name: "Veggie Burger", description: "Served with lettuce and tomato.", price: 10.5, from: true },
       { name: "All-Beef Frank", description: "Sauerkraut and onions.", price: 4, from: true },
@@ -160,7 +179,11 @@ export const menu: MenuSection[] = [
     short: "Salads",
     items: [
       { name: "Tuna Fish Salad Platter", description: "With lettuce, tomatoes and onions.", price: 11.5 },
-      { name: "Paul's Salad", description: "Lettuce, tomatoes, cucumbers, onions, Swiss cheese, green peppers and ham.", price: 13.5 },
+      {
+        name: "Paul's Salad",
+        description: "Lettuce, tomatoes, cucumbers, onions, Swiss cheese, green peppers and ham.",
+        price: 13.5,
+      },
       {
         name: "Linda's Grilled Chicken Salad",
         description: "Lettuce, tomatoes, cucumbers, onions, mozzarella and grilled chicken.",

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, type FormEvent } from "react"
+import { useEffect, useRef, useState, type FormEvent } from "react"
 import { site } from "@/lib/site"
 
 type Fields = {
@@ -25,15 +25,25 @@ const initial: Fields = {
   details: "",
 }
 
+/** Tomorrow's date in New York as YYYY-MM-DD: catering needs 24 hours' notice. */
+function earliestDate() {
+  const now = new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }))
+  now.setDate(now.getDate() + 1)
+  const pad = (n: number) => String(n).padStart(2, "0")
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`
+}
+
 function validate(f: Fields): Errors {
   const e: Errors = {}
   if (!f.name.trim()) e.name = "Please tell us your name."
   if (!f.email.trim()) e.email = "We need an email address to reply to."
   else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())) e.email = "That email address doesn't look complete."
   if (!f.date) e.date = "Pick the date of your event."
+  else if (f.date < earliestDate())
+    e.date = "Catering needs at least 24 hours' notice. Pick tomorrow or later, or call us."
   const guests = Number(f.guests)
   if (!f.guests) e.guests = "Roughly how many people are you feeding?"
-  else if (!Number.isFinite(guests) || guests < 1) e.guests = "Enter a number of guests, like 25."
+  else if (!Number.isInteger(guests) || guests < 1) e.guests = "Enter a whole number of guests, like 25."
   return e
 }
 
@@ -46,6 +56,19 @@ export default function CateringForm() {
   const [fields, setFields] = useState<Fields>(initial)
   const [errors, setErrors] = useState<Errors>({})
   const [sent, setSent] = useState(false)
+  const [minDate, setMinDate] = useState<string | undefined>(undefined)
+  const doneRef = useRef<HTMLParagraphElement>(null)
+
+  // Computed in the browser so the static page never bakes in a stale date.
+  useEffect(() => {
+    const id = window.setTimeout(() => setMinDate(earliestDate()), 0)
+    return () => window.clearTimeout(id)
+  }, [])
+
+  // Move focus to the confirmation so keyboard and screen reader users land on it.
+  useEffect(() => {
+    if (sent) doneRef.current?.focus()
+  }, [sent])
 
   const set = <K extends keyof Fields>(key: K, value: Fields[K]) => {
     setFields((f) => ({ ...f, [key]: value }))
@@ -79,14 +102,16 @@ export default function CateringForm() {
   }
 
   const field =
-    "mt-1.5 block w-full border-2 border-ink bg-paper px-3.5 py-3 text-[1.05rem] text-ink placeholder:text-muted/70 focus:outline-none focus-visible:outline-none focus:ring-4 focus:ring-mustard aria-[invalid=true]:border-ketchup"
+    "mt-1.5 block w-full border-2 border-ink bg-paper px-3.5 py-3 text-[1.05rem] text-ink placeholder:text-muted/70 focus:outline-none focus-visible:outline-none focus:ring-4 focus:ring-ketchup/60 aria-[invalid=true]:border-ketchup"
   const label = "font-cond text-[1.1rem] font-bold uppercase tracking-[0.06em]"
   const errorText = "mt-1.5 font-semibold text-ketchup-deep"
 
   if (sent) {
     return (
       <div className="border-2 border-ink bg-paper p-6 sm:p-8" role="status">
-        <p className="font-display text-d-sm">Almost done</p>
+        <p ref={doneRef} tabIndex={-1} className="font-display text-d-sm focus:outline-none">
+          Almost done
+        </p>
         <p className="mt-3 text-ink/85">
           Your email app should have opened with the request filled in. Hit send and we&rsquo;ll get back to you to
           confirm the menu and price.
@@ -110,9 +135,17 @@ export default function CateringForm() {
   }
 
   return (
-    <form noValidate onSubmit={onSubmit} className="border-2 border-ink bg-paper p-5 sm:p-8" aria-describedby="catering-form-note">
+    <form
+      noValidate
+      onSubmit={onSubmit}
+      className="border-2 border-ink bg-paper p-5 sm:p-8"
+      aria-describedby="catering-form-note"
+    >
       <p id="catering-form-note" className="text-[1rem] text-ink/75">
-        Fields marked <span aria-hidden="true" className="font-bold text-ketchup">*</span>
+        Fields marked{" "}
+        <span aria-hidden="true" className="font-bold text-ketchup">
+          *
+        </span>
         <span className="sr-only">with an asterisk</span> are required. Sending opens your email app with your request
         written out for you.
       </p>
@@ -120,7 +153,10 @@ export default function CateringForm() {
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="catering-name" className={label}>
-            Your name <span aria-hidden="true" className="text-ketchup">*</span>
+            Your name{" "}
+            <span aria-hidden="true" className="text-ketchup">
+              *
+            </span>
           </label>
           <input
             id="catering-name"
@@ -132,11 +168,18 @@ export default function CateringForm() {
             aria-invalid={Boolean(errors.name)}
             aria-describedby={errors.name ? "catering-name-error" : undefined}
           />
-          {errors.name ? <p id="catering-name-error" className={errorText}>{errors.name}</p> : null}
+          {errors.name ? (
+            <p id="catering-name-error" className={errorText}>
+              {errors.name}
+            </p>
+          ) : null}
         </div>
         <div>
           <label htmlFor="catering-email" className={label}>
-            Email <span aria-hidden="true" className="text-ketchup">*</span>
+            Email{" "}
+            <span aria-hidden="true" className="text-ketchup">
+              *
+            </span>
           </label>
           <input
             id="catering-email"
@@ -149,11 +192,18 @@ export default function CateringForm() {
             aria-invalid={Boolean(errors.email)}
             aria-describedby={errors.email ? "catering-email-error" : undefined}
           />
-          {errors.email ? <p id="catering-email-error" className={errorText}>{errors.email}</p> : null}
+          {errors.email ? (
+            <p id="catering-email-error" className={errorText}>
+              {errors.email}
+            </p>
+          ) : null}
         </div>
         <div>
           <label htmlFor="catering-phone" className={label}>
-            Phone <span className="font-sans text-[0.95rem] font-medium normal-case tracking-normal text-muted">(optional)</span>
+            Phone{" "}
+            <span className="font-sans text-[0.95rem] font-medium normal-case tracking-normal text-muted">
+              (optional)
+            </span>
           </label>
           <input
             id="catering-phone"
@@ -166,29 +216,45 @@ export default function CateringForm() {
         </div>
         <div>
           <label htmlFor="catering-date" className={label}>
-            Event date <span aria-hidden="true" className="text-ketchup">*</span>
+            Event date{" "}
+            <span aria-hidden="true" className="text-ketchup">
+              *
+            </span>
           </label>
           <input
             id="catering-date"
             type="date"
             className={field}
+            min={minDate}
             required
             value={fields.date}
             onChange={(e) => set("date", e.target.value)}
             aria-invalid={Boolean(errors.date)}
-            aria-describedby={errors.date ? "catering-date-error" : undefined}
+            aria-describedby={errors.date ? "catering-date-error" : "catering-date-hint"}
           />
-          {errors.date ? <p id="catering-date-error" className={errorText}>{errors.date}</p> : null}
+          {errors.date ? (
+            <p id="catering-date-error" className={errorText}>
+              {errors.date}
+            </p>
+          ) : (
+            <p id="catering-date-hint" className="mt-1.5 text-[0.95rem] text-muted">
+              At least 24 hours ahead.
+            </p>
+          )}
         </div>
         <div>
           <label htmlFor="catering-guests" className={label}>
-            Number of guests <span aria-hidden="true" className="text-ketchup">*</span>
+            Number of guests{" "}
+            <span aria-hidden="true" className="text-ketchup">
+              *
+            </span>
           </label>
           <input
             id="catering-guests"
             type="number"
             inputMode="numeric"
             min={1}
+            step={1}
             className={field}
             required
             value={fields.guests}
@@ -196,7 +262,11 @@ export default function CateringForm() {
             aria-invalid={Boolean(errors.guests)}
             aria-describedby={errors.guests ? "catering-guests-error" : undefined}
           />
-          {errors.guests ? <p id="catering-guests-error" className={errorText}>{errors.guests}</p> : null}
+          {errors.guests ? (
+            <p id="catering-guests-error" className={errorText}>
+              {errors.guests}
+            </p>
+          ) : null}
         </div>
         <fieldset>
           <legend className={label}>Delivery or pickup</legend>
@@ -204,7 +274,7 @@ export default function CateringForm() {
             {(["Delivery", "Pickup"] as const).map((opt) => (
               <label
                 key={opt}
-                className={`flex min-h-[3.1rem] cursor-pointer items-center justify-center border-2 border-ink font-cond text-[1.05rem] font-semibold uppercase tracking-[0.06em] has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-mustard ${
+                className={`flex min-h-[3.1rem] cursor-pointer items-center justify-center border-2 border-ink font-cond text-[1.05rem] font-semibold uppercase tracking-[0.06em] has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-ketchup/60 ${
                   fields.fulfillment === opt ? "bg-ink text-cream" : "bg-paper"
                 }`}
               >
@@ -224,7 +294,9 @@ export default function CateringForm() {
         <div className="sm:col-span-2">
           <label htmlFor="catering-details" className={label}>
             What are you thinking?{" "}
-            <span className="font-sans text-[0.95rem] font-medium normal-case tracking-normal text-muted">(optional)</span>
+            <span className="font-sans text-[0.95rem] font-medium normal-case tracking-normal text-muted">
+              (optional)
+            </span>
           </label>
           <textarea
             id="catering-details"

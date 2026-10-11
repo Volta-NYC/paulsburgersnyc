@@ -1,25 +1,16 @@
 "use client"
 
 import { useSyncExternalStore } from "react"
-import { hours } from "@/lib/site"
+import { DAY_NAMES, formatTime, hours } from "@/lib/site"
 
-const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 // Start the week on Monday for display.
 const ORDER = [1, 2, 3, 4, 5, 6, 0]
-
-function fmt(minutes: number) {
-  if (minutes >= 24 * 60) return "Midnight"
-  const h = Math.floor(minutes / 60)
-  const m = minutes % 60
-  const h12 = h % 12 === 0 ? 12 : h % 12
-  return `${h12}:${m.toString().padStart(2, "0")} ${h >= 12 ? "PM" : "AM"}`
-}
 
 const subscribe = () => () => {}
 
 function todayInNewYork() {
   const weekday = new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", weekday: "long" }).format(new Date())
-  return DAYS.indexOf(weekday)
+  return DAY_NAMES.indexOf(weekday as (typeof DAY_NAMES)[number])
 }
 
 /** Weekly hours with today's row highlighted (in New York time, after mount). */
@@ -37,11 +28,15 @@ export default function HoursTable() {
           return (
             <tr key={d} className={`border-b-2 border-ink/10 ${isToday ? "bg-mustard" : ""}`}>
               <th scope="row" className="py-3 pl-3 pr-4 font-cond text-[1.2rem] font-bold uppercase tracking-[0.04em]">
-                {DAYS[d]}
-                {isToday ? <span className="ml-2 font-sans text-[0.95rem] font-semibold normal-case tracking-normal">(today)</span> : null}
+                {DAY_NAMES[d]}
+                {isToday ? (
+                  <span className="ml-2 font-sans text-[0.95rem] font-semibold normal-case tracking-normal">
+                    (today)
+                  </span>
+                ) : null}
               </th>
               <td className="py-3 pr-3 text-right font-cond text-[1.2rem] font-semibold tabular-nums">
-                {fmt(h.open)} to {fmt(h.close)}
+                {formatTime(h.open)} to {formatTime(h.close)}
               </td>
             </tr>
           )

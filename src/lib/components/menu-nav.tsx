@@ -10,19 +10,18 @@ type Item = { id: string; label: string }
  */
 export default function MenuNav({ items }: { items: Item[] }) {
   const [active, setActive] = useState(items[0]?.id)
+  const navRef = useRef<HTMLElement>(null)
   const listRef = useRef<HTMLUListElement>(null)
 
   useEffect(() => {
-    const sections = items
-      .map((i) => document.getElementById(i.id))
-      .filter((el): el is HTMLElement => Boolean(el))
+    const sections = items.map((i) => document.getElementById(i.id)).filter((el): el is HTMLElement => Boolean(el))
 
-    // The active section is the last one whose top has passed a line just
-    // below the sticky bars. Scroll-driven, so scrolling back up resets it.
+    // The active section is the last one whose top has reached the bottom
+    // edge of this sticky bar (plus the 1rem anchor gap). Scroll-driven, so scrolling back up resets it.
     let frame = 0
     const update = () => {
       frame = 0
-      const line = window.innerHeight * 0.3
+      const line = (navRef.current?.getBoundingClientRect().bottom ?? 0) + 32
       let current = sections[0]?.id
       for (const section of sections) {
         if (section.getBoundingClientRect().top <= line) current = section.id
@@ -48,22 +47,24 @@ export default function MenuNav({ items }: { items: Item[] }) {
     const link = list?.querySelector<HTMLAnchorElement>(`a[href="#${active}"]`)
     if (!list || !link) return
     const left = link.offsetLeft - list.clientWidth / 2 + link.clientWidth / 2
-    list.scrollTo({ left, behavior: "smooth" })
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    list.scrollTo({ left, behavior: reduce ? "auto" : "smooth" })
   }, [active])
 
   return (
     <nav
+      ref={navRef}
       aria-label="Menu categories"
-      className="sticky top-nav z-30 border-y-2 border-ink bg-paper"
+      className="sticky top-nav z-30 h-[var(--menubar-h)] border-y-2 border-ink bg-paper"
     >
       <ul
         ref={listRef}
-        className="container-site flex gap-1 overflow-x-auto py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="container-site flex h-full items-center gap-1 overflow-x-auto [scrollbar-width:none] max-lg:[mask-image:linear-gradient(to_right,black_calc(100%-3rem),transparent)] [&::-webkit-scrollbar]:hidden"
       >
         {items.map((item) => {
           const isActive = active === item.id
           return (
-            <li key={item.id} className="shrink-0">
+            <li key={item.id} className="shrink-0 last:pr-8 lg:last:pr-0">
               <a
                 href={`#${item.id}`}
                 aria-current={isActive ? "true" : undefined}

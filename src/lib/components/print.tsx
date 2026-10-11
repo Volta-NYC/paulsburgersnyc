@@ -32,19 +32,15 @@ export default function Print({
 }: PrintProps) {
   return (
     <figure
-      className={`bg-paper p-2 shadow-[6px_6px_0_rgb(var(--ink))] ring-2 ring-ink sm:p-2.5 ${className}`}
+      className={`bg-paper p-2 shadow-print ring-2 ring-ink sm:p-2.5 ${className}`}
       style={tilt ? { rotate: `${tilt}deg` } : undefined}
       data-reveal={reveal ? "" : undefined}
     >
-      <div className="relative overflow-hidden bg-bun" style={{ aspectRatio: aspect ?? `${photo.width} / ${photo.height}` }}>
-        <Image
-          src={photo.src}
-          alt={photo.alt}
-          fill
-          sizes={sizes}
-          priority={priority}
-          className="object-cover"
-        />
+      <div
+        className="relative overflow-hidden bg-bun"
+        style={{ aspectRatio: aspect ?? `${photo.width} / ${photo.height}` }}
+      >
+        <Image src={photo.src} alt={photo.alt} fill sizes={sizes} priority={priority} className="object-cover" />
       </div>
       {caption ? (
         <figcaption className="px-1 pb-0.5 pt-2 font-cond text-[1rem] font-semibold uppercase tracking-[0.08em] text-muted">

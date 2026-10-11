@@ -5,22 +5,23 @@ import Print from "@/lib/components/print"
 import { formatPrice, menu, type MenuSection } from "@/lib/menu"
 import { photos, type PhotoKey } from "@/lib/photos"
 import { site } from "@/lib/site"
+import { riseDelay } from "@/lib/motion"
+import { pageMetadata } from "@/lib/metadata"
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Menu",
-  description:
-    "The full Paul's Da Burger Joint menu: 20 half-pound burgers, the smash burger, heroes, omelettes, platters, fries and soda fountain classics. Order online for pickup or delivery.",
-  alternates: { canonical: "/menu" },
-}
+  description: `The full Paul's Da Burger Joint menu: ${menu.find((s) => s.id === "half-pound")!.items.length} half-pound burgers, the smash burger, heroes, omelettes, platters, fries and soda fountain classics. Order online for pickup or delivery.`,
+  path: "/menu",
+})
 
 /** Photos that sit beside particular sections. */
 const sectionPhotos: Partial<Record<string, { key: PhotoKey; caption: string }>> = {
   "half-pound": { key: "baconCheeseburger", caption: "Half pound, bacon, cheese" },
-  smash: { key: "twoBurgersCounter", caption: "At the counter" },
-  "more-than-burgers": { key: "englishBurger", caption: "The English Burger" },
-  platters: { key: "onionBurgerFries", caption: "Steak fries on the side" },
+  smash: { key: "cookAtGrill", caption: "On the grill" },
+  platters: { key: "onionBurgerFries", caption: "Fries come with every platter" },
+  eggs: { key: "texasBurger", caption: "Or put the egg on a burger" },
   sides: { key: "onionRings", caption: "Rings and curlies" },
-  salads: { key: "salad", caption: "Paul's Salad" },
+  salads: { key: "salad", caption: "From the salad platters" },
 }
 
 function count(sectionId: string, match?: RegExp) {
@@ -57,13 +58,13 @@ function Section({ section, index }: { section: MenuSection; index: number }) {
     <section
       id={section.id}
       aria-labelledby={`${section.id}-title`}
-      className={`scroll-mt-[calc(var(--nav-h)+4rem)] border-b-2 border-ink ${
+      className={`scroll-mt-[var(--menubar-h)] border-b-2 border-ink ${
         isFountain ? "bg-mint" : index % 2 === 1 ? "bg-paper" : "bg-cream"
       }`}
     >
       <div className="container-site grid gap-10 py-14 md:py-20 lg:grid-cols-12 lg:gap-12">
         <header className="lg:col-span-4">
-          <div className="lg:sticky lg:top-[calc(var(--nav-h)+5.5rem)]">
+          <div className="lg:sticky lg:top-[calc(var(--nav-h)+var(--menubar-h)+1.5rem)]">
             <h2 id={`${section.id}-title`} className="font-display text-d-md" data-reveal="">
               {section.title}
             </h2>
@@ -92,10 +93,15 @@ function Section({ section, index }: { section: MenuSection; index: number }) {
           </div>
         </header>
 
-        <div className={`lg:col-span-8 ${compact ? "grid items-start gap-10 md:grid-cols-[minmax(0,1fr)_16rem] lg:gap-12" : ""}`}>
+        <div
+          className={`lg:col-span-8 ${compact ? "grid items-start gap-10 md:grid-cols-[minmax(0,1fr)_16rem] lg:gap-12" : ""}`}
+        >
           <ul className={`grid gap-x-12 ${twoCol ? "md:grid-cols-2" : "max-w-2xl"}`}>
             {section.items.map((item) => (
-              <li key={item.name} className="border-b border-ink/15 py-4 last:border-b-0 md:[&:nth-last-child(2)]:border-b-0">
+              <li
+                key={item.name}
+                className={`border-b border-ink/15 py-4 last:border-b-0 ${twoCol && section.items.length % 2 === 0 ? "md:[&:nth-last-child(2)]:border-b-0" : ""}`}
+              >
                 <div className="leader">
                   <h3 className="font-cond text-[1.25rem] font-bold uppercase leading-tight tracking-[0.04em]">
                     {item.name}
@@ -115,14 +121,24 @@ function Section({ section, index }: { section: MenuSection; index: number }) {
           </ul>
 
           {photo && compact ? (
-            <div className="max-w-sm">
-              <Print photo={photos[photo.key]} sizes="(min-width: 768px) 16rem, 90vw" caption={photo.caption} tilt={index % 2 ? 1.5 : -1.5} />
+            <div className="max-w-[14rem] md:max-w-sm">
+              <Print
+                photo={photos[photo.key]}
+                sizes="(min-width: 768px) 16rem, 14rem"
+                caption={photo.caption}
+                tilt={index % 2 ? 1.5 : -1.5}
+              />
             </div>
           ) : null}
 
           {photo && !compact ? (
             <div className="mt-10 max-w-sm lg:hidden">
-              <Print photo={photos[photo.key]} sizes="(min-width: 640px) 24rem, 90vw" caption={photo.caption} tilt={-1} />
+              <Print
+                photo={photos[photo.key]}
+                sizes="(min-width: 640px) 24rem, 90vw"
+                caption={photo.caption}
+                tilt={-1}
+              />
             </div>
           ) : null}
 
@@ -142,7 +158,7 @@ export default function MenuPage() {
   const board = [
     `${count("half-pound")} half-pound burgers`,
     `${count("eggs", /Omelette/)} omelettes`,
-    `${count("sides", /Fries/)} kinds of fries`,
+    `${count("sides", /Fries$/)} kinds of fries`,
     "1 egg cream",
   ]
 
@@ -153,14 +169,14 @@ export default function MenuPage() {
         <div className="container-site grid items-center gap-10 py-10 md:grid-cols-12 md:py-16">
           <div className="md:col-span-6">
             <p className="eyebrow animate-rise text-ketchup-deep">Paul&rsquo;s Da Burger Joint</p>
-            <h1 className="animate-rise mt-3 font-display text-d-xl" style={{ ["--rise-delay" as string]: "80ms" }}>
+            <h1 className="animate-rise mt-3 font-display text-d-xl" style={riseDelay(80)}>
               The menu
             </h1>
-            <p className="animate-rise mt-5 max-w-prose text-[1.15rem] text-ink/85" style={{ ["--rise-delay" as string]: "160ms" }}>
-              Everything we cook, from the half-pounders to the omelettes, heroes and platters. Order online for
-              pickup or delivery, or come in and order at the counter.
+            <p className="animate-rise mt-5 max-w-prose text-[1.15rem] text-ink/85" style={riseDelay(160)}>
+              Everything we cook, from the half-pounders to the omelettes, heroes and platters. Order online for pickup
+              or delivery, or come in and order at the counter.
             </p>
-            <div className="animate-rise mt-7 flex flex-col gap-3 sm:flex-row" style={{ ["--rise-delay" as string]: "240ms" }}>
+            <div className="animate-rise mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap" style={riseDelay(240)}>
               <a href={site.links.order} target="_blank" rel="noreferrer" className="btn btn-primary">
                 Order online<span className="sr-only"> (opens in a new tab)</span>
               </a>
@@ -170,7 +186,7 @@ export default function MenuPage() {
             </div>
           </div>
           <div className="md:col-span-6">
-            <div className="letterboard animate-rise px-6 py-8 sm:px-10 sm:py-10" style={{ ["--rise-delay" as string]: "200ms" }}>
+            <div className="letterboard animate-rise px-6 py-8 sm:px-10 sm:py-10" style={riseDelay(200)}>
               <p className="letterboard-text text-center text-[1rem] text-mustard">Now serving</p>
               <ul className="mt-5 space-y-2 text-center">
                 {board.map((line) => (
@@ -198,10 +214,10 @@ export default function MenuPage() {
               Ready to order?
             </h2>
             <p className="mt-4 max-w-prose text-ink/85" data-reveal="">
-              Online ordering handles pickup and delivery, with every option and add-on. Big group? Our catering menu
-              is built for offices and parties.
+              Online ordering handles pickup and delivery, with every option and add-on. Big group? Our catering menu is
+              built for offices and parties.
             </p>
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row" data-reveal="">
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap" data-reveal="">
               <a href={site.links.order} target="_blank" rel="noreferrer" className="btn btn-primary">
                 Order online<span className="sr-only"> (opens in a new tab)</span>
               </a>
@@ -210,12 +226,17 @@ export default function MenuPage() {
               </Link>
             </div>
           </div>
-          <aside className="border-l-4 border-ketchup pl-5 text-[1rem] text-ink/80 md:col-span-5" aria-label="Menu notes" data-reveal="">
+          <aside
+            className="border-l-4 border-ketchup pl-5 text-[1rem] text-ink/80 md:col-span-5"
+            aria-label="Menu notes"
+            data-reveal=""
+          >
             <h2 className="font-cond text-[1.15rem] font-bold uppercase tracking-[0.08em] text-ink">Good to know</h2>
             <ul className="mt-3 space-y-2">
               <li>
-                Prices shown are our online ordering prices and can change. A <span className="font-bold text-ketchup">+</span>{" "}
-                means options such as deluxe, cheese or extras add to the price.
+                Prices shown are our online ordering prices and can change. A{" "}
+                <span className="font-bold text-ketchup">+</span> means options such as deluxe, cheese or extras add to
+                the price.
               </li>
               <li>Online ordering closes a little before the restaurant does each night.</li>
             </ul>

@@ -12,23 +12,16 @@ import "./globals.css"
 import Navbar from "@/lib/components/navbar"
 import Footer from "@/lib/components/footer"
 import RevealObserver from "@/lib/components/reveal-observer"
-import { site, fullAddress } from "@/lib/site"
+import { site, fullAddress, openingHoursSpecification } from "@/lib/site"
+import { DEFAULT_TITLE } from "@/lib/metadata"
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} | Half-Pound Burgers in the East Village`,
+    default: DEFAULT_TITLE,
     template: `%s | ${site.name}`,
   },
   description: site.description,
-  openGraph: {
-    type: "website",
-    siteName: site.name,
-    locale: "en_US",
-    url: "/",
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "A half-pound burger at Paul's Da Burger Joint" }],
-  },
-  twitter: { card: "summary_large_image" },
 }
 
 export const viewport: Viewport = {
@@ -41,7 +34,7 @@ const jsonLd = {
   "@type": "Restaurant",
   name: site.name,
   url: site.url,
-  telephone: "+1-212-529-3033",
+  telephone: site.phone.e164,
   email: site.email.display,
   servesCuisine: ["Burgers", "American", "Diner"],
   priceRange: "$",
@@ -56,20 +49,7 @@ const jsonLd = {
     postalCode: site.address.postalCode,
     addressCountry: "US",
   },
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
-      opens: "11:00",
-      closes: "23:30",
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Friday", "Saturday"],
-      opens: "11:00",
-      closes: "23:59",
-    },
-  ],
+  openingHoursSpecification: openingHoursSpecification(),
   sameAs: site.social.map((s) => s.href),
   hasMap: site.links.maps,
   description: `${site.description} ${fullAddress()}.`,
