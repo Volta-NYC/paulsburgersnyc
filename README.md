@@ -39,6 +39,8 @@ Art direction is "East Village counter signage": 1950s diner cues (ketchup red, 
 
 Next.js 16 (App Router), TypeScript, Tailwind CSS 3, hosted on Vercel.
 
+Optimized images have a 31-day minimum cache lifetime (`images.minimumCacheTTL` in `next.config.ts`). Image quality, formats and responsive sizes keep the existing Next.js settings. When replacing a photo or logo, use a new filename and update its reference so Vercel immediately gets a fresh image URL. Redeploying alone does not invalidate an optimized image cached under the old URL.
+
 ```bash
 npm install
 npm run dev     # local development

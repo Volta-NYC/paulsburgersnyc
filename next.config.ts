@@ -19,6 +19,11 @@ const legacy: [string, string][] = [
 ]
 
 const nextConfig: NextConfig = {
+  images: {
+    // These local photos rarely change. Replacing one requires a new filename
+    // so Vercel serves the new image without waiting for the cache to expire.
+    minimumCacheTTL: 60 * 60 * 24 * 31,
+  },
   async redirects() {
     return legacy.map(([source, destination]) => ({ source, destination, permanent: true }))
   },
