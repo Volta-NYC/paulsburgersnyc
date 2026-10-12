@@ -294,7 +294,13 @@ export default function HomePage() {
           <div className="relative md:col-span-6 lg:col-span-6 lg:col-start-7">
             <div className="grid grid-cols-5 items-end gap-4 sm:gap-6">
               <div className="col-span-3">
-                <Print photo={photos.milkshakeCounter} sizes="(min-width: 768px) 28vw, 58vw" tilt={-2} aspect="4 / 5" />
+                <Print
+                  photo={photos.milkshakeCounter}
+                  sizes="(min-width: 768px) 28vw, 58vw"
+                  tilt={-2}
+                  aspect="4 / 5"
+                  focus="0% 50%"
+                />
               </div>
               <div className="col-span-2 pb-10">
                 <Print photo={photos.float} sizes="(min-width: 768px) 18vw, 38vw" tilt={2.5} />

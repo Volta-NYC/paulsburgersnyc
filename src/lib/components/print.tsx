@@ -12,6 +12,8 @@ type PrintProps = {
   className?: string
   /** Force an aspect ratio crop, e.g. "4 / 5". Defaults to the photo's own ratio. */
   aspect?: string
+  /** Where to anchor a forced crop, e.g. "15% 50%" to keep a subject on the left. */
+  focus?: string
   reveal?: boolean
 }
 
@@ -28,6 +30,7 @@ export default function Print({
   priority = false,
   className = "",
   aspect,
+  focus,
   reveal = true,
 }: PrintProps) {
   return (
@@ -40,7 +43,15 @@ export default function Print({
         className="relative overflow-hidden bg-bun"
         style={{ aspectRatio: aspect ?? `${photo.width} / ${photo.height}` }}
       >
-        <Image src={photo.src} alt={photo.alt} fill sizes={sizes} priority={priority} className="object-cover" />
+        <Image
+          src={photo.src}
+          alt={photo.alt}
+          fill
+          sizes={sizes}
+          priority={priority}
+          className="object-cover"
+          style={focus ? { objectPosition: focus } : undefined}
+        />
       </div>
       {caption ? (
         <figcaption className="px-1 pb-0.5 pt-2 font-cond text-[1rem] font-semibold uppercase tracking-[0.08em] text-muted">

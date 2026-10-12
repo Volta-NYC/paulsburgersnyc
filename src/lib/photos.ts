@@ -48,7 +48,7 @@ export const photos = {
   ),
   cheeseburgerLettuce: p("cheeseburger-lettuce.jpg", 640, 480, "Thick cheeseburger stacked with lettuce and tomato"),
   texasBurger: p("texas-burger.jpg", 640, 480, "Texas Burger topped with a sunny-side-up fried egg"),
-  burgerKetchup: p("burger-ketchup.jpg", 640, 480, "Mushroom cheeseburger next to a bottle of Heinz ketchup"),
+  burgerKetchup: p("burger-ketchup.jpg", 640, 480, "Bacon burger with lettuce and tomato, mushrooms on the side and a bottle of Heinz ketchup"),
   cheeseburgerClassic: p(
     "cheeseburger-classic.jpg",
     640,
@@ -62,7 +62,7 @@ export const photos = {
     640,
     "Open-faced burger with mushrooms and bacon on a plate, seen from above on checkered paper",
   ),
-  mushroomBurger: p("mushroom-burger.jpg", 640, 480, "Mushroom burger on a plate next to a second burger"),
+  mushroomBurger: p("mushroom-burger.jpg", 640, 480, "Burger smothered in sautéed mushrooms, with the top bun, lettuce and tomato on the side"),
   twoBurgersCounter: p(
     "two-burgers-counter.jpg",
     800,
@@ -73,7 +73,7 @@ export const photos = {
     "onion-burgers-close.jpg",
     800,
     600,
-    "Close-up of a cheeseburger with fried onions and a sesame bun",
+    "Close-up of a burger with fried onions and melted cheese, fries on the side",
   ),
   onionBurgerFries: p(
     "onion-burger-fries.jpg",
@@ -93,7 +93,7 @@ export const photos = {
     600,
     "Close-up of fries under chili and melted American cheese",
   ),
-  chiliFriesChecker: p("chili-fries-checker.jpg", 640, 480, "Plate of chili fries on a checkered tablecloth"),
+  chiliFriesChecker: p("chili-fries-checker.jpg", 640, 480, "Plate of chili cheese fries on checkered paper"),
   milkshakeCounter: p(
     "milkshake-counter.jpg",
     640,
@@ -101,7 +101,7 @@ export const photos = {
     "Chocolate milkshake on the counter with the menu board behind it",
   ),
   float: p("ice-cream-float.jpg", 600, 800, "Soda float topped with a scoop of vanilla ice cream"),
-  stewarts: p("stewarts-sodas.jpg", 600, 800, "Bottles of Stewart's root beer and cream soda"),
+  stewarts: p("stewarts-sodas.jpg", 600, 800, "Bottles of Stewart's sodas"),
   beers: p("beer-bottles.jpg", 640, 480, "Row of beer bottles on a checkered table"),
   salad: p("pauls-salad.jpg", 800, 600, "Salad with lettuce, tomato and a creamy dressing"),
 
