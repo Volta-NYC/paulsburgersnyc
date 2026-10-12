@@ -10,7 +10,7 @@ import { pageMetadata } from "@/lib/metadata"
 export const metadata: Metadata = pageMetadata({
   title: "Catering",
   description:
-    "Catering from Paul's Da Burger Joint: individually packed half-pound burgers, sliders, heroes, platters and sides for offices and parties, delivered around Manhattan or ready for pickup.",
+    "Catering from Paul’s Da Burger Joint: individually packed burgers, sliders, heroes, platters and sides for offices and parties, delivered around Manhattan or ready for pickup.",
   path: "/catering",
 })
 
@@ -28,7 +28,7 @@ const steps = [
   {
     n: "3",
     title: "We cook and deliver",
-    body: "We prepare the order and bring it to your office or event, whether that's Battery Park or the Upper East Side.",
+    body: "We prepare the order and bring it to your office or event, whether that’s Battery Park or the Upper East Side.",
   },
 ]
 

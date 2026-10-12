@@ -13,7 +13,7 @@ export const metadata: Metadata = pageMetadata({ description: site.description, 
 
 const lineup = [
   { name: "Eastsider Burger", note: "The house specialty. Bacon, ham, mushrooms, tomatoes, onions, cheese." },
-  { name: "Saint Mark's Burger", note: "Named for the corner. Mushrooms and fried onions." },
+  { name: "Saint Mark’s Burger", note: "Named for the corner. Mushrooms and fried onions." },
   { name: "Second Avenue Burger", note: "Fried onions, ham and tomatoes on a cheeseburger." },
   { name: "Texas Burger", note: "A fried egg on top. Break the yolk." },
   { name: "El Paso Burger", note: "Cheddar and fresh jalapeños." },
@@ -85,7 +85,7 @@ export default function HomePage() {
           {/* Photo collage */}
           <div
             className="relative mx-auto w-full max-w-[34rem] md:col-span-5 md:max-w-none"
-            aria-label="Photos from Paul's"
+            aria-label="Photos from Paul’s"
           >
             <div className="animate-rise relative z-10 ml-auto w-[88%]" style={riseDelay(150)}>
               <Print

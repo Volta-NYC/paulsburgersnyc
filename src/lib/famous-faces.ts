@@ -36,7 +36,7 @@ export const famousFaces: FamousFace[] = [
     340,
     "Ron Darling",
     "New York Mets",
-    "beside the giant burger under the NYC's Best Burger neon",
+    "beside the giant burger under the NYC’s Best Burger neon",
   ),
   face("hoda-kotb.jpg", 311, 340, "Hoda Kotb", "Morning show host", "smiling beside a man in a suit and tie"),
   face(
@@ -55,7 +55,7 @@ export const famousFaces: FamousFace[] = [
     "Paulie Walnuts on The Sopranos",
     "posing with another man on the sidewalk",
   ),
-  face("jake-lacy.jpg", 600, 400, "Jake Lacy", "Actor, The Office", "beside the giant burger under the Paul's neon"),
+  face("jake-lacy.jpg", 600, 400, "Jake Lacy", "Actor, The Office", "beside the giant burger under the Paul’s neon"),
   face("mr-g.jpg", 600, 400, 'Irv "Mr. G" Gikofsky', "Weatherman", "posing with a man in a plaid shirt"),
   face("kira-kazantsev.jpg", 800, 600, "Kira Kazantsev", "Miss America", "beside the giant burger out front"),
 ]

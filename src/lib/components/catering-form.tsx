@@ -37,10 +37,10 @@ function validate(f: Fields): Errors {
   const e: Errors = {}
   if (!f.name.trim()) e.name = "Please tell us your name."
   if (!f.email.trim()) e.email = "We need an email address to reply to."
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())) e.email = "That email address doesn't look complete."
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.trim())) e.email = "That email address doesn’t look complete."
   if (!f.date) e.date = "Pick the date of your event."
   else if (f.date < earliestDate())
-    e.date = "Catering needs at least 24 hours' notice. Pick tomorrow or later, or call us."
+    e.date = "Catering needs at least 24 hours’ notice. Pick tomorrow or later, or call us."
   const guests = Number(f.guests)
   if (!f.guests) e.guests = "Roughly how many people are you feeding?"
   else if (!Number.isInteger(guests) || guests < 1) e.guests = "Enter a whole number of guests, like 25."

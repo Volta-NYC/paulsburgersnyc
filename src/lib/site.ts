@@ -9,17 +9,17 @@
  */
 
 export const site = {
-  name: "Paul's Da Burger Joint",
-  shortName: "Paul's",
+  name: "Paul’s Da Burger Joint",
+  shortName: "Paul’s",
   tagline: "Half-pound burgers on Second Avenue since 1989",
   description:
-    "Family-run East Village burger joint at 131 2nd Avenue and St. Mark's Place. Half-pound burgers, egg creams and frosteds since 1989. Order online for pickup or delivery.",
+    "Family-run East Village burger joint at 131 2nd Avenue and St. Mark’s Place. Half-pound burgers, egg creams and frosteds since 1989. Order online for pickup or delivery.",
   url: "https://paulsburgersnyc.com",
   founded: 1989,
 
   address: {
     street: "131 2nd Avenue",
-    crossStreet: "at St. Mark's Place",
+    crossStreet: "at St. Mark’s Place",
     city: "New York",
     region: "NY",
     postalCode: "10003",
@@ -114,7 +114,7 @@ export const nav = [
 export const press = [
   {
     outlet: "Tasting Table",
-    note: "Named New York's best hole-in-the-wall burger joint",
+    note: "Named New York’s best hole-in-the-wall burger joint",
     year: 2026,
     href: "https://www.tastingtable.com/2259879/new-york-best-burger-spot-hole-in-wall-pauls/",
   },
@@ -132,7 +132,7 @@ export const press = [
   },
   {
     outlet: "New York Magazine",
-    note: "Restaurant listing, under the old Paul's Palace name",
+    note: "Restaurant listing, under the old Paul’s Palace name",
     year: null,
     href: "https://nymag.com/listings/restaurant/pauls-palace/",
   },
@@ -143,14 +143,14 @@ export const press = [
     href: "https://www.timeout.com/newyork/restaurants/pauls",
   },
   {
-    outlet: "Crain's New York",
-    note: "Matt Wardrop of Paul's, in a story on the block after the 2015 East Village explosion",
+    outlet: "Crain’s New York",
+    note: "Matt Wardrop of Paul’s, in a story on the block after the 2015 East Village explosion",
     year: 2015,
     href: "https://www.crainsnewyork.com/article/20150405/SMALLBIZ/150409943/when-a-disaster-like-the-east-village-explosion-visits-your-block/",
   },
   {
     outlet: "Gothamist",
-    note: "A small business crawl stopping at Paul's, a few storefronts up from the explosion site",
+    note: "A small business crawl stopping at Paul’s, a few storefronts up from the explosion site",
     year: 2015,
     href: "https://gothamist.com/food/small-biz-crawl-will-help-establishments-reeling-from-east-village-explosion",
   },

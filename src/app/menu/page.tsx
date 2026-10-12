@@ -10,7 +10,7 @@ import { pageMetadata } from "@/lib/metadata"
 
 export const metadata: Metadata = pageMetadata({
   title: "Menu",
-  description: `The full Paul's Da Burger Joint menu: ${menu.find((s) => s.id === "half-pound")!.items.length} half-pound burgers, the smash burger, heroes, omelettes, platters, fries and soda fountain classics. Order online for pickup or delivery.`,
+  description: `The full Paul’s Da Burger Joint menu: ${menu.find((s) => s.id === "half-pound")!.items.length} half-pound burgers, the smash burger, heroes, omelettes, platters, fries and soda fountain classics. Order online for pickup or delivery.`,
   path: "/menu",
 })
 

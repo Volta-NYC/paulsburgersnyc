@@ -4,7 +4,7 @@ import { site } from "@/lib/site"
 
 export const metadata: Metadata = {
   title: "Page not found",
-  description: "That page isn't on the menu. Find the menu, our hours and online ordering for Paul's Da Burger Joint.",
+  description: "That page isn’t on the menu. Find the menu, our hours and online ordering for Paul’s Da Burger Joint.",
 }
 
 export default function NotFound() {

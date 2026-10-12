@@ -101,12 +101,12 @@ export const photos = {
     "Chocolate milkshake on the counter with the menu board behind it",
   ),
   float: p("ice-cream-float.jpg", 600, 800, "Soda float topped with a scoop of vanilla ice cream"),
-  stewarts: p("stewarts-sodas.jpg", 600, 800, "Bottles of Stewart's sodas"),
+  stewarts: p("stewarts-sodas.jpg", 600, 800, "Bottles of Stewart’s sodas"),
   beers: p("beer-bottles.jpg", 640, 480, "Row of beer bottles on a checkered table"),
   salad: p("pauls-salad.jpg", 800, 600, "Salad with lettuce, tomato and a creamy dressing"),
 
   // The joint
-  signEst1989: p("sign-est-1989.jpg", 640, 480, "Red Paul's Da Burger Joint sign reading Est. 1989"),
+  signEst1989: p("sign-est-1989.jpg", 640, 480, "Red Paul’s Da Burger Joint sign reading Est. 1989"),
   diningRoom: p(
     "dining-room.jpg",
     640,

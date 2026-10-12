@@ -9,7 +9,7 @@ import { pageMetadata } from "@/lib/metadata"
 export const metadata: Metadata = pageMetadata({
   title: "Gallery",
   description:
-    "Photos from Paul's Da Burger Joint in the East Village: half-pound burgers, chili cheese fries, milkshakes and the checkered dining room on Second Avenue.",
+    "Photos from Paul’s Da Burger Joint in the East Village: half-pound burgers, chili cheese fries, milkshakes and the checkered dining room on Second Avenue.",
   path: "/gallery",
 })
 

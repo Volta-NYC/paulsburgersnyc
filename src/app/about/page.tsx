@@ -11,35 +11,35 @@ import { menu } from "@/lib/menu"
 export const metadata: Metadata = pageMetadata({
   title: "Our Story",
   description:
-    "Paul's Da Burger Joint opened as Paul's Palace on Second Avenue in 1989 and is still family run. The story, the counter, famous faces and press.",
+    "Paul’s Da Burger Joint opened as Paul’s Palace on Second Avenue in 1989 and is still family run. The story, the counter, famous faces and press.",
   path: "/about",
 })
 
 const timeline = [
   {
     year: "1989",
-    title: "Paul's Palace opens",
-    body: "Paul Koval opens a burger counter on Second Avenue at St. Mark's Place. It later takes the name it still has: Paul's Da Burger Joint.",
+    title: "Paul’s Palace opens",
+    body: "Paul Koval opens a burger counter on Second Avenue at St. Mark’s Place. It later takes the name it still has: Paul’s Da Burger Joint.",
   },
   {
     year: "2007",
     title: "Kept in the family",
-    body: "Paul's cousin, Matt Wardrop, takes over and keeps running it the same way: big portions, fair prices, counter service.",
+    body: "Paul’s cousin, Matt Wardrop, takes over and keeps running it the same way: big portions, fair prices, counter service.",
   },
   {
     year: "2014",
     title: "Twenty-five years on the corner",
-    body: "Paul's marks its 25th anniversary on Second Avenue, still serving half-pound burgers and egg creams late into the night.",
+    body: "Paul’s marks its 25th anniversary on Second Avenue, still serving half-pound burgers and egg creams late into the night.",
   },
   {
     year: "2015",
     title: "Burger Week and a tough spring",
-    body: "Eater profiles the crew for New York Burger Week. After a gas explosion a few storefronts down Second Avenue, Crain's and Gothamist cover the small businesses on the block, Paul's among them.",
+    body: "Eater profiles the crew for New York Burger Week. After a gas explosion a few storefronts down Second Avenue, Crain’s and Gothamist cover the small businesses on the block, Paul’s among them.",
   },
   {
     year: "2026",
     title: "Still the best hole in the wall",
-    body: "Tasting Table names Paul's New York's best hole-in-the-wall burger joint.",
+    body: "Tasting Table names Paul’s New York’s best hole-in-the-wall burger joint.",
   },
 ]
 

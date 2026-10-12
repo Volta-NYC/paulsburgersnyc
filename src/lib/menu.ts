@@ -42,7 +42,7 @@ export const menu: MenuSection[] = [
       { name: "Monterey Jack Cheeseburger", description: "Topped with Monterey Jack.", price: 11.1, from: true },
       { name: "Cheddar Cheeseburger", description: "Topped with cheddar.", price: 11.1, from: true },
       { name: "Blue Cheeseburger", description: "Topped with blue cheese.", price: 11.1, from: true },
-      { name: "English Burger", description: "On a toasted Thomas' English muffin.", price: 11.1, from: true },
+      { name: "English Burger", description: "On a toasted Thomas’ English muffin.", price: 11.1, from: true },
       { name: "Texas Burger", description: "Topped with a fried egg.", price: 11.6, from: true },
       { name: "El Paso Burger", description: "Cheddar and jalapeño peppers.", price: 12.6, from: true },
       { name: "Chili Burger", description: "Smothered with chili con carne.", price: 12.85, from: true },
@@ -57,7 +57,7 @@ export const menu: MenuSection[] = [
       { name: "Cali Mex Burger", description: "Avocado and jalapeños.", price: 14.1, from: true },
       { name: "Mexican Burger", description: "Pepper Jack cheese and avocado.", price: 14.1, from: true },
       {
-        name: "Saint Mark's Burger",
+        name: "Saint Mark’s Burger",
         description: "A cheeseburger topped with mushrooms and fried onions.",
         price: 15.35,
         from: true,
@@ -74,12 +74,12 @@ export const menu: MenuSection[] = [
   },
   {
     id: "smash",
-    title: "Paul's Smash Burger",
+    title: "Paul’s Smash Burger",
     short: "Smash",
-    intro: "The half-pounder's little sibling: a thin smashed patty, dressed the classic way.",
+    intro: "The half-pounder’s little sibling: a thin smashed patty, dressed the classic way.",
     items: [
       {
-        name: "Paul's Smash Burger",
+        name: "Paul’s Smash Burger",
         description:
           "A 2.5 oz patty with cheese, lettuce, tomato, raw onion, pickles and Russian dressing on our classic hamburger bun.",
         price: 9.25,
@@ -154,7 +154,7 @@ export const menu: MenuSection[] = [
       { name: "Bacon & Cheese Omelette", price: 14, from: true },
       { name: "Mexican Omelette", price: 14, from: true },
       { name: "Mushroom & Cheese Omelette", price: 14, from: true },
-      { name: "Paul's Omelette", description: "Ham, onions, peppers and tomatoes.", price: 15, from: true },
+      { name: "Paul’s Omelette", description: "Ham, onions, peppers and tomatoes.", price: 15, from: true },
       { name: "Veggie Omelette", description: "Tomato, peppers, onions and mushrooms.", price: 15, from: true },
     ],
   },
@@ -180,12 +180,12 @@ export const menu: MenuSection[] = [
     items: [
       { name: "Tuna Fish Salad Platter", description: "With lettuce, tomatoes and onions.", price: 11.5 },
       {
-        name: "Paul's Salad",
+        name: "Paul’s Salad",
         description: "Lettuce, tomatoes, cucumbers, onions, Swiss cheese, green peppers and ham.",
         price: 13.5,
       },
       {
-        name: "Linda's Grilled Chicken Salad",
+        name: "Linda’s Grilled Chicken Salad",
         description: "Lettuce, tomatoes, cucumbers, onions, mozzarella and grilled chicken.",
         price: 15.75,
       },
@@ -239,7 +239,7 @@ export const menu: MenuSection[] = [
       { name: "Soft Drinks", price: 3.5 },
       { name: "Seltzer", price: 3.5 },
       { name: "Snapple", price: 3.75 },
-      { name: "Stewart's", price: 3.75 },
+      { name: "Stewart’s", price: 3.75 },
       { name: "Coffee", price: 3 },
       { name: "Tea", price: 4 },
       { name: "Iced Tea", price: 4 },
@@ -254,7 +254,7 @@ export const menu: MenuSection[] = [
     title: "Sauces & Condiments",
     short: "Sauces",
     items: [
-      { name: "Paul's Secret Sauce (2 oz)", price: 2 },
+      { name: "Paul’s Secret Sauce (2 oz)", price: 2 },
       { name: "Horseradish Mayo (2 oz)", price: 2 },
       { name: "Chipotle Mayo (2 oz)", price: 2 },
       { name: "A1 Sauce (2 oz)", price: 2 },

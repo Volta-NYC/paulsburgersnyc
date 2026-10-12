@@ -7,7 +7,7 @@ const ogImage = {
   url: "/og.jpg",
   width: 1200,
   height: 630,
-  alt: "Half-pound burgers on Second Avenue since 1989: Paul's Da Burger Joint",
+  alt: "Half-pound burgers on Second Avenue since 1989: Paul’s Da Burger Joint",
 }
 
 /**

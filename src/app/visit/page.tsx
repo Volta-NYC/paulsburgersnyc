@@ -10,7 +10,7 @@ import { pageMetadata } from "@/lib/metadata"
 
 export const metadata: Metadata = pageMetadata({
   title: "Visit & Contact",
-  description: `Paul's Da Burger Joint is at ${fullAddress()} (${site.address.crossStreet}). Open ${hoursSummary[0].days} ${hoursSummary[0].time}, ${hoursSummary[1].days} ${hoursSummary[1].time}. Call ${site.phone.display}.`,
+  description: `Paul’s Da Burger Joint is at ${fullAddress()} (${site.address.crossStreet}). Open ${hoursSummary[0].days} ${hoursSummary[0].time}, ${hoursSummary[1].days} ${hoursSummary[1].time}. Call ${site.phone.display}.`,
   path: "/visit",
 })
 
